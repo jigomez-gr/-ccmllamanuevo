@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"D:\\\\tmp\\\\claudecode\\\\ccmfalla\\\\NUEVO_PROYECTO\\\\assets\\\\img\\\\\" | Where-Object { $_.Name -match \"2880w|orchestra_playing|fy66WNCz\" } | Select-Object Name)",
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(grep -v \"//\\\\|querySelectorAll\\\\|classList\\\\|class.*dmBody\\\\|class.*dmDesktopBody\")",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(ssh -T git@github.com -o StrictHostKeyChecking=no)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+ccnfallaprueba.n8njigretera.cloud {
+    # Sirve los archivos estáticos del sitio
+    root * /app
+    file_server
+
+    # Proxy hacia la API C# — reemplazar URL cuando esté desplegada en Dokploy
+    reverse_proxy /api/* http://ccmfalla-api:8080
+}
