@@ -1,5 +1,4 @@
-ccnfallaprueba.n8njigretera.cloud {
-    # Sirve los archivos estáticos del sitio
+:3000 {
     root * /app
     file_server
 
