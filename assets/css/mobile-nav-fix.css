@@ -109,4 +109,21 @@ body.mnf-open .mnf-toggle span:nth-child(3) { transform: translateY(-12px) rotat
     #dm .main-navigation.unifiednav.mnf-nav .unifiednav__container[data-depth='1'] .unifiednav__item {
         padding-left: 52px;
     }
+
+    /* The site's own floating "ENTRADAS" button (a Duda global widget) carries a
+       per-instance CSS override (position:relative, fixed 0/0 offsets) that only
+       becomes visible now that the page is allowed to be narrower than 768px.
+       Restore proper fixed bottom-right placement so it doesn't sit on top of
+       the page text. chat-bubble.js reads this button to stack itself above it. */
+    #dm#dm .sticky-widgets-container-global a[class*="sticky-mobile-position"],
+    #dm#dm .sticky-widgets-container a[class*="sticky-mobile-position"] {
+        position: fixed !important;
+        top: auto !important;
+        bottom: 16px !important;
+        left: auto !important;
+        right: 16px !important;
+        margin: 0 !important;
+        max-width: calc(100% - 32px);
+        z-index: 9998;
+    }
 }

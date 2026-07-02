@@ -104,24 +104,39 @@
             }
         }
 
-        function adjustForCookieBar() {
-            var bar = document.getElementById('d-notification-bar');
-            var gap = 16;
-            if (bar) {
-                var style = getComputedStyle(bar);
-                var rect = bar.getBoundingClientRect();
-                var visible = style.display !== 'none' && style.visibility !== 'hidden' && rect.height > 0;
-                if (visible) {
-                    var overlap = window.innerHeight - rect.top;
-                    if (overlap > 0) gap = overlap + 12;
-                }
-            }
+        // Avoid stacking on top of other fixed bottom-right elements: the site's
+        // own cookie notice, and any Duda "sticky" widget (e.g. the ENTRADAS button).
+        function bottomObstacleOverlap() {
+            var candidates = [document.getElementById('d-notification-bar')].concat(
+                Array.prototype.slice.call(document.querySelectorAll(
+                    '.sticky-widgets-container-global a, .sticky-widgets-container a'
+                ))
+            );
+            var maxOverlap = 0;
+            candidates.forEach(function (el) {
+                if (!el || el === bubble || el === container || container.contains(el)) return;
+                var style = getComputedStyle(el);
+                if (style.display === 'none' || style.visibility === 'hidden') return;
+                var rect = el.getBoundingClientRect();
+                if (rect.width === 0 || rect.height === 0) return;
+                var nearRight = rect.right > window.innerWidth - 140;
+                var fullWidthBar = rect.width > window.innerWidth * 0.9;
+                if (!nearRight && !fullWidthBar) return;
+                var overlap = window.innerHeight - rect.top;
+                if (overlap > maxOverlap) maxOverlap = overlap;
+            });
+            return maxOverlap;
+        }
+
+        function adjustPosition() {
+            var overlap = bottomObstacleOverlap();
+            var gap = overlap > 0 ? overlap + 12 : 16;
             bubble.style.bottom = gap + 'px';
             container.style.bottom = (gap + 72) + 'px';
         }
-        adjustForCookieBar();
-        window.addEventListener('resize', adjustForCookieBar);
-        setInterval(adjustForCookieBar, 1500);
+        adjustPosition();
+        window.addEventListener('resize', adjustPosition);
+        setInterval(adjustPosition, 1500);
 
         bubble.addEventListener('click', function () { toggleOpen(); });
         sendBtn.addEventListener('click', sendMessage);
