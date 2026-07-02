@@ -1,0 +1,112 @@
+/* Custom fix: hamburger menu for small screens. Not part of the original IONOS export. */
+
+.mnf-toggle {
+    display: none;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 1000;
+    width: 34px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+.mnf-toggle span {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #111;
+    border-radius: 2px;
+    transition: transform .2s ease, opacity .2s ease;
+}
+.mnf-toggle span:nth-child(1) { top: 0; }
+.mnf-toggle span:nth-child(2) { top: 12px; }
+.mnf-toggle span:nth-child(3) { top: 24px; }
+body.mnf-open .mnf-toggle span:nth-child(1) { transform: translateY(12px) rotate(45deg); }
+body.mnf-open .mnf-toggle span:nth-child(2) { opacity: 0; }
+body.mnf-open .mnf-toggle span:nth-child(3) { transform: translateY(-12px) rotate(-45deg); }
+
+@media (max-width: 1024px) {
+    #dm .dmInner,
+    .dmInner {
+        min-width: 0 !important;
+    }
+
+    .dmHeaderContent.freeHeaderRow1 {
+        position: relative;
+    }
+
+    .mnf-toggle {
+        display: block;
+    }
+
+    /* Leave room on the left for the hamburger button and center the logo */
+    #dm .dmHeaderContent.freeHeaderRow1 {
+        padding-left: 44px;
+    }
+
+    #dm .main-navigation.unifiednav.mnf-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 75vh;
+        overflow-y: auto;
+        background: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, .15);
+        z-index: 999;
+    }
+    body.mnf-open #dm .main-navigation.unifiednav.mnf-nav {
+        display: block;
+    }
+
+    /* The original CSS lays out <li> and <ul> as flex rows (for the desktop
+       hover flyouts). On mobile everything must stack in normal block flow,
+       so force block display top to bottom regardless of the base rules. */
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__container,
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__item-wrap {
+        display: block !important;
+        width: 100%;
+        flex: none;
+    }
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__item {
+        width: 100%;
+        padding: 14px 20px;
+        border-bottom: 1px solid #ececec;
+        box-sizing: border-box;
+    }
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__item_has-sub-nav .icon {
+        display: inline-flex;
+        margin-left: auto;
+        padding: 4px 8px;
+        transition: transform .2s ease;
+    }
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__item-wrap.mnf-submenu-open > .unifiednav__item .icon {
+        transform: rotate(180deg);
+    }
+
+    /* Sub-menus: collapsed accordion panels instead of hover flyouts */
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__container[data-depth] {
+        display: none !important;
+        position: static !important;
+        opacity: 1;
+        transform: none !important;
+        left: auto !important;
+        top: auto !important;
+        background: #faf9f9;
+    }
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__item-wrap.mnf-submenu-open > .unifiednav__container[data-depth] {
+        display: block !important;
+    }
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__container[data-depth] .unifiednav__item {
+        padding-left: 36px;
+    }
+    #dm .main-navigation.unifiednav.mnf-nav .unifiednav__container[data-depth='1'] .unifiednav__item {
+        padding-left: 52px;
+    }
+}
