@@ -126,4 +126,20 @@ body.mnf-open .mnf-toggle span:nth-child(3) { transform: translateY(-12px) rotat
         max-width: calc(100% - 32px);
         z-index: 9998;
     }
+
+    /* The home hero carousel (FlexSlider, a jQuery plugin bundled in
+       runtime.min.js) computes each slide's width/position in JS from the
+       container's pixel width. On a real phone over a real network, that
+       calculation can race image loading and the narrower layout our fixes
+       enable, leaving two slides visible at once or a tall blank gap while
+       nothing has rendered yet. Force only the first slide to ever be
+       visible on mobile so it degrades to one static poster instead of a
+       broken/duplicated one. This does disable the slide auto-rotation on
+       mobile only — desktop keeps the working carousel untouched. */
+    #dm .flexslider .slides > li {
+        display: none !important;
+    }
+    #dm .flexslider .slides > li:first-child {
+        display: block !important;
+    }
 }
