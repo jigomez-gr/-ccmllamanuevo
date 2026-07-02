@@ -142,4 +142,32 @@ body.mnf-open .mnf-toggle span:nth-child(3) { transform: translateY(-12px) rotat
     #dm .flexslider .slides > li:first-child {
         display: block !important;
     }
+
+    /* The slider's containers (.dmImageSlider, .flexslider, .slides, li) all
+       carry a fixed desktop pixel height (e.g. 350/698px) and the <img>
+       inside is absolutely positioned with object-fit:contain to fill that
+       box. That box's aspect ratio only makes sense at desktop widths — on a
+       narrow phone it's much "squarer" than the wide poster images, so
+       contain letterboxes with big blank bars above/below. Let the image
+       flow naturally at its own intrinsic aspect ratio instead of being
+       forced into a fixed-height box.
+       On top of that, the widget itself carries a PER-INSTANCE rule (Duda
+       editor auto-generates one per widget id, e.g. "div.u_1015447537")
+       fixing its height in px with !important and higher specificity than a
+       plain class selector — same pattern as the ENTRADAS button fix above.
+       #dm#dm (two IDs) beats any single-ID vendor rule outright. */
+    #dm#dm .dmImageSlider,
+    #dm#dm .flexslider,
+    #dm#dm .flexslider .slides,
+    #dm#dm .flexslider .slides > li {
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    #dm .flexslider .slides > li:first-child > img {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        object-fit: unset !important;
+    }
 }
